@@ -4,26 +4,24 @@
 #
 Name     : R-WikipediR
 Version  : 1.5.0
-Release  : 6
+Release  : 7
 URL      : https://cran.r-project.org/src/contrib/WikipediR_1.5.0.tar.gz
 Source0  : https://cran.r-project.org/src/contrib/WikipediR_1.5.0.tar.gz
 Summary  : A MediaWiki API Wrapper
 Group    : Development/Tools
 License  : MIT
+Requires: R-cli
 Requires: R-httr
 Requires: R-jsonlite
-Requires: R-markdown
-Requires: R-stringi
+BuildRequires : R-cli
 BuildRequires : R-httr
 BuildRequires : R-jsonlite
-BuildRequires : R-markdown
-BuildRequires : R-stringi
-BuildRequires : clr-R-helpers
+BuildRequires : buildreq-R
 
 %description
-Wikimedia 'production' wikis, such as Wikipedia. It can be used to retrieve
-    page text, information about users or the history of pages, and elements of
-    the category tree.
+WikipediR
+=========
+An R API wrapper for MediaWiki, optimised for the Wikimedia Foundation MediaWiki instances, such as Wikipedia.
 
 %prep
 %setup -q -c -n WikipediR
@@ -33,11 +31,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530293105
+export SOURCE_DATE_EPOCH=1552837682
 
 %install
+export SOURCE_DATE_EPOCH=1552837682
 rm -rf %{buildroot}
-export SOURCE_DATE_EPOCH=1530293105
 export LANG=C
 export CFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
@@ -55,9 +53,9 @@ echo "FFLAGS = $FFLAGS -march=haswell -ftree-vectorize " >> ~/.R/Makevars
 echo "CXXFLAGS = $CXXFLAGS -march=haswell -ftree-vectorize " >> ~/.R/Makevars
 R CMD INSTALL --install-tests --built-timestamp=${SOURCE_DATE_EPOCH} --build  -l %{buildroot}/usr/lib64/R/library WikipediR
 for i in `find %{buildroot}/usr/lib64/R/ -name "*.so"`; do mv $i $i.avx2 ; mv $i.avx2 ~/.stash/; done
-echo "CFLAGS = $CFLAGS -march=skylake-avx512 -ftree-vectorize -mprefer-vector-width=512 " > ~/.R/Makevars
-echo "FFLAGS = $FFLAGS -march=skylake-avx512 -ftree-vectorize -mprefer-vector-width=512 " >> ~/.R/Makevars
-echo "CXXFLAGS = $CXXFLAGS -march=skylake-avx512 -ftree-vectorize -mprefer-vector-width=512  " >> ~/.R/Makevars
+echo "CFLAGS = $CFLAGS -march=skylake-avx512 -ftree-vectorize " > ~/.R/Makevars
+echo "FFLAGS = $FFLAGS -march=skylake-avx512 -ftree-vectorize " >> ~/.R/Makevars
+echo "CXXFLAGS = $CXXFLAGS -march=skylake-avx512 -ftree-vectorize " >> ~/.R/Makevars
 R CMD INSTALL --preclean --install-tests --no-test-load --built-timestamp=${SOURCE_DATE_EPOCH} --build  -l %{buildroot}/usr/lib64/R/library WikipediR
 for i in `find %{buildroot}/usr/lib64/R/ -name "*.so"`; do mv $i $i.avx512 ; mv $i.avx512 ~/.stash/; done
 echo "CFLAGS = $CFLAGS -ftree-vectorize " > ~/.R/Makevars
@@ -72,8 +70,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export _R_CHECK_FORCE_SUGGESTS_=false
-R CMD check --no-manual --no-examples --no-codoc -l %{buildroot}/usr/lib64/R/library WikipediR|| : 
-cp ~/.stash/* %{buildroot}/usr/lib64/R/library/*/libs/ || :
+R CMD check --no-manual --no-examples --no-codoc  WikipediR || :
 
 
 %files
@@ -103,3 +100,8 @@ cp ~/.stash/* %{buildroot}/usr/lib64/R/library/*/libs/ || :
 /usr/lib64/R/library/WikipediR/help/paths.rds
 /usr/lib64/R/library/WikipediR/html/00Index.html
 /usr/lib64/R/library/WikipediR/html/R.css
+/usr/lib64/R/library/WikipediR/tests/testthat.R
+/usr/lib64/R/library/WikipediR/tests/testthat/test_category_retrieval.R
+/usr/lib64/R/library/WikipediR/tests/testthat/test_content_retrieval.R
+/usr/lib64/R/library/WikipediR/tests/testthat/test_metadata_retrieval.R
+/usr/lib64/R/library/WikipediR/tests/testthat/test_recent_changes.R
