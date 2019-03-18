@@ -4,15 +4,12 @@
 #
 Name     : R-WikipediR
 Version  : 1.5.0
-Release  : 8
+Release  : 9
 URL      : https://cran.r-project.org/src/contrib/WikipediR_1.5.0.tar.gz
 Source0  : https://cran.r-project.org/src/contrib/WikipediR_1.5.0.tar.gz
 Summary  : A MediaWiki API Wrapper
 Group    : Development/Tools
 License  : MIT
-Requires: R-cli
-Requires: R-httr
-Requires: R-jsonlite
 BuildRequires : R-cli
 BuildRequires : R-httr
 BuildRequires : R-jsonlite
@@ -31,10 +28,10 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1552837682
+export SOURCE_DATE_EPOCH=1552918914
 
 %install
-export SOURCE_DATE_EPOCH=1552837682
+export SOURCE_DATE_EPOCH=1552918914
 rm -rf %{buildroot}
 export LANG=C
 export CFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
