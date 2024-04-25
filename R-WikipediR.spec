@@ -7,7 +7,7 @@
 #
 Name     : R-WikipediR
 Version  : 1.7.1
-Release  : 41
+Release  : 42
 URL      : https://cran.r-project.org/src/contrib/WikipediR_1.7.1.tar.gz
 Source0  : https://cran.r-project.org/src/contrib/WikipediR_1.7.1.tar.gz
 Summary  : A MediaWiki API Wrapper
